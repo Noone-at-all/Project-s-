@@ -1,11 +1,12 @@
 Project-s-
 ==========
 
+Okay, we still need a GUI, I have the mechanics handled.
 Guise, a project!
 Game of life?
 
 Implemented so far:
-	who knows?
+	mechanics, says dav
 
 TODO:
-	whatever dav hasn't done yet.
+	GUI, or rather, curses-based CLI
