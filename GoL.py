@@ -14,28 +14,51 @@ class Game(object):
 		super(Game, self).__init__()
 		self.arg = arg
 CellsDict = {}
+from random import randint
 def MakeBoard(x, y):
     for item in range(x):
         for i in range(y):
-            File.write('Cell(%s, %s) = Cell(%s, %s)' % (str(item), str(i), int(item), int(i)))
-            File.write('\n')
-            CellsDict[item, i] = Cell(item, i)
+            Rand = randint(1, 50)
+            if Rand % 2 == 0:
+                L = True
+            else:
+                L = False
+            CellsDict[item, i] = Cell(item, i, L)
 class Cell(object):
-    def __init__(self, x, y):
+    def __init__(self, x, y, life): #Life is a bool value
         self.positionx = x
         self.positiony = y
-    def CheckLife(self):
-        self,life = 'You\'re checking, and I\'m still between dead and alive.'
+        self.life = life
     def __repr__(self):
         return '(%s, %s)' % (str(self.positionx), str(self.positiony))
     def isalive(self):
-        pass
+        pass #Will soon be given substance.
 #A template cell.
-class LivingCell(Cell):
+def CountLN(x, y):
+    count = 0
+    if x > 0:
+        Gatex = True
+    if y > 0:
+        Gatey = True
+    if Gatey and Gatex:
+        Horsey = [CellsDict[x-1, y-1], CellsDict[x-1, y], CellsDict[x-1, y+1], CellsDict[x, y], \
+CellsDict[x, y], CellsDict[x, y+1], CellsDict[x, y-1], CellsDict[x+1, y-1], CellsDict[x+1, y], \
+CellsDict[x+1, y+1]]
+        for item in Horsey:
+            if item.life == True:
+                count += 1
+            else:
+                pass
+        return count
+    #Horesy because 'neigh'bors
+def ShouldBeLiving(x, y):
+    CPL = [x, y]
+    #Will be improved later.
+class LivingCell(Cell):#Does not need to exist
     def __repr__(self):
         return '(%s, %s), %s' % (str(self.positionx), str(self.positiony), str(self.life))
 #Living cells, soon to be improved.
-class DeadCell(Cell):
+class DeadCell(Cell):#See LivingCell
     def __repr__(self):
         return '(%s, %s), %s' % (str(self.positionx), str(self.positiony), str(self.life))
 #Dead cells, soon to be living.
