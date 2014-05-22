@@ -90,6 +90,7 @@ class Cell(object):
 	def WillBeAliveNextRound(self):
 		# this function doesn't work, because CountLivingNeighbors doesn't work, because CountLivingNeighbors depends on obsolete global variables
 		# returns True or False depending on whether this cell should be alive the next round
+		#That's a lot of word to type
 		LivingNeighbors = CountLivingNeighbors(self.Position_x, self.Position_y)
 		if LivingNeighbors < 2:
 			self.life = False
@@ -129,7 +130,6 @@ CellsDict[x+1, y+1]]
 			pass
 	return count
 	#Horesy because 'neigh'bors
-
 
 # below this line is temp stuff, for testing.
 brd = Board(25,25,fill="random")
