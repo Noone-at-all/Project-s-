@@ -53,7 +53,17 @@ CellsDict[x+1, y+1]]
     #Horesy because 'neigh'bors
 def ShouldBeLiving(x, y):
     CPL = [x, y]
-    #Will be improved later.
+    MC = CellsDict[x, y]
+    LN = CountLN(MC)
+    if LN < 2:
+        return False
+    if LN == 3:
+        return True
+    if LN > 3:
+        return False
+    if LN == 2
+        return MC.life
+        #Returns True if the cell should be alive, and False if it shouldn't,
 class LivingCell(Cell):#Does not need to exist
     def __repr__(self):
         return '(%s, %s), %s' % (str(self.positionx), str(self.positiony), str(self.life))
