@@ -17,9 +17,7 @@ for i in range(20):
 def DrawGrid(grid):
     for row in grid:
         print ''.join(row)
-
-DrawGrid(grid)
-
+        
 def MakeBoard(x, y):
     global boardx
     boardx = x
