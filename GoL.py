@@ -54,6 +54,8 @@ class Cell(object):
         if LN == 2:
             self.life = self.life
 #A cell.
+
+# this means Count Living Neighbors
 def CountLN(x, y):
     count = 0
     Gatex = False
