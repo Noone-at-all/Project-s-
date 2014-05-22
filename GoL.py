@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 """
 Conway's Game of Life
 http://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules
