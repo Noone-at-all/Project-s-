@@ -28,6 +28,11 @@ class Cell(object):
         self.posx = x
         self.posy = y
         self.life = life
+        if life:
+            CoLi = 'X'
+        elif not life:
+            CoLi = 'O'
+        self.CoLi = CoLi
     def __repr__(self):
         return '%s, and at (%s, %s)' % (str(self.life), str(self.posx), str(self.posy))
     def ShLi(self):
@@ -80,3 +85,15 @@ def ShouldBeLiving(x, y):
     if LN == 2:
         return MC.life
         #Returns True if the cell should be alive, and False if it shouldn't,
+def PresentBoard():
+    YList = range(boardy)
+    XList = range(boardx)
+    CurrentY = YList[len(YList)-1]
+    CurrentX = XList[0]
+    while CurrentY >= 0:
+        while CurrentX <= len(XList)-1:
+            print CellsDict[CurrentX, CurrentY].CoLi,
+            CurrentX += 1
+        CurrentY -= 1
+        CurrentX = XList[0]
+        print ''
