@@ -10,5 +10,3 @@ Any dead cell with exactly three live neighbours becomes a live cell, as if by r
 class Cell(object):
     def __init__(self):
         pass
-
-#update test
