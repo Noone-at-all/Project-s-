@@ -20,6 +20,10 @@ def DrawGrid(grid):
 DrawGrid(grid)
 
 def MakeBoard(x, y):
+    global boardx
+    boardx = x
+    global boardy
+    boardy = y
     for item in range(x):
         for i in range(y):
             Rand = randint(1, 50)
