@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+import random
 """
 Conway's Game of Life
 http://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules
@@ -13,7 +14,7 @@ from random import randint
 
 grid = []
 for i in range(20):
-	grid.append('O' * 20)
+	grid.append('0' * 20)
 def DrawGrid(grid):
 	for row in grid:
 		print ''.join(row)
@@ -31,32 +32,50 @@ def MakeBoard(x, y):
 			else:
 				L = False
 			CellsDict[item, i] = Cell(item, i, L)
+
+class Board(object):
+	def __init__(self,x,y,fill="random"):
+		# creates a board object that is x columns wide by y rows tall
+		self.width = x
+		self.height = y
+		self.x = x
+		self.y = y
+		self.CellsDict = {}
+		for row in range(self.x):
+			for column in range(self.y):
+				if fill == "random":
+					self.CellsDict[row,column] = Cell( row, column, random.choice([True,False]) )
+				elif fill == "blank":
+					self.CellsDict[row,column] = Cell( row, column, False )
+				elif fill == "Full":
+					self.CellsDict[row,column] = Cell( row, column, True )
 class Cell(object):
-	def __init__(self, x, y, life): #Life is a bool value
-		self.posx = x
-		self.posy = y
+	def __init__(self, x, y, life):
+		# x and y are the co-ordinates of the cell
+		# Life is a bool value,
+		self.Position_x = x
+		self.Position_y = y
 		self.life = life
 		if life:
-			CoLi = 'X'
+			CoLi = '#'
 		elif not life:
 			CoLi = 'O'
 		self.CoLi = CoLi
 	def __repr__(self):
-		return '%s, and at (%s, %s)' % (str(self.life), str(self.posx), str(self.posy))
-	def ShLi(self):
-		LN = CountLN(self.posx, self.posy)
-		if LN < 2:
+		return "{life}, and at ({x}, {y})".format(life=str(self.life), x=str(self.Position_x), y=str(self.Position_y))
+	def WillBeAliveNextRound(self):
+		# returns True or False depending on whether this cell should be alive the next round
+		LivingNeighbors = CountLivingNeighbors(self.Position_x, self.Position_y)
+		if LivingNeighbors < 2:
 			self.life = False
-		if LN == 3:
+		if LivingNeighbors == 3:
 			self.life = True
-		if LN > 3:
+		if LivingNeighbors > 3:
 			self.life = False
-		if LN == 2:
+		if LivingNeighbors == 2:
 			self.life = self.life
-#A cell.
 
-# this means Count Living Neighbors
-def CountLN(x, y):
+def CountLivingNeighbors(x, y):
 	count = 0
 	Gatex = False
 	Gatey = False
@@ -83,18 +102,7 @@ CellsDict[x+1, y+1]]
 			pass
 	return count
 	#Horesy because 'neigh'bors
-def ShouldBeLiving(x, y):
-	MC = CellsDict[x, y]
-	LN = CountLN(x, y)
-	if LN < 2:
-		return False
-	if LN == 3:
-		return True
-	if LN > 3:
-		return False
-	if LN == 2:
-		return MC.life
-		#Returns True if the cell should be alive, and False if it shouldn't,
+
 def PresentBoard():
 	YList = range(boardy)
 	XList = range(boardx)
@@ -107,3 +115,5 @@ def PresentBoard():
 		CurrentY -= 1
 		CurrentX = XList[0]
 		print ''
+brd = Board(5,5)
+print brd.CellsDict
