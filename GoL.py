@@ -7,7 +7,6 @@ Any live cell with two or three live neighbours lives on to the next generation.
 Any live cell with more than three live neighbours dies, as if by overcrowding.
 Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 """
-File = open('CellList.txt', 'w')
 class Game(object):
 	"""docstring for Game"""
 	def __init__(self, arg):
@@ -36,32 +35,42 @@ class Cell(object):
 #A template cell.
 def CountLN(x, y):
     count = 0
+    Gatex = False
+    Gatey = False
     if x > 0:
         Gatex = True
     if y > 0:
         Gatey = True
-    if Gatey and Gatex:
+    if Gatex and Gatey:
         Horsey = [CellsDict[x-1, y-1], CellsDict[x-1, y], CellsDict[x-1, y+1], CellsDict[x, y], \
 CellsDict[x, y], CellsDict[x, y+1], CellsDict[x, y-1], CellsDict[x+1, y-1], CellsDict[x+1, y], \
 CellsDict[x+1, y+1]]
-        for item in Horsey:
-            if item.life == True:
-                count += 1
-            else:
-                pass
-        return count
+    elif Gatex and not Gatey:
+        Horsey = [CellsDict[x-1, y], CellsDict[x-1, y+1], CellsDict[x, y], \
+CellsDict[x, y], CellsDict[x, y+1], CellsDict[x+1, y], \
+CellsDict[x+1, y+1]]
+    elif Gatey and not Gatex:
+        Horsey = [CellsDict[x, y], \
+CellsDict[x, y], CellsDict[x, y+1], CellsDict[x, y-1], CellsDict[x+1, y-1], CellsDict[x+1, y], \
+CellsDict[x+1, y+1]]
+    for item in Horsey:
+        if item.life == True:
+            count += 1
+        else:
+            pass
+    return count
     #Horesy because 'neigh'bors
 def ShouldBeLiving(x, y):
     CPL = [x, y]
     MC = CellsDict[x, y]
-    LN = CountLN(MC)
+    LN = CountLN(x, y)
     if LN < 2:
         return False
     if LN == 3:
         return True
     if LN > 3:
         return False
-    if LN == 2
+    if LN == 2:
         return MC.life
         #Returns True if the cell should be alive, and False if it shouldn't,
 class LivingCell(Cell):#Does not need to exist
