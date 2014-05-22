@@ -19,7 +19,7 @@ def DrawGrid(grid):
 	for row in grid:
 		print ''.join(row)
 		
-def MakeBoard(x, y):
+def MakeBoard(x, y): #Makes a board, and Cells too.
 	global boardx
 	boardx = x
 	global boardy
@@ -65,6 +65,7 @@ class Cell(object):
 		return "{life}, and at ({x}, {y})".format(life=str(self.life), x=str(self.Position_x), y=str(self.Position_y))
 	def WillBeAliveNextRound(self):
 		# returns True or False depending on whether this cell should be alive the next round
+		#That's a lot of word to type
 		LivingNeighbors = CountLivingNeighbors(self.Position_x, self.Position_y)
 		if LivingNeighbors < 2:
 			self.life = False
@@ -103,7 +104,7 @@ CellsDict[x+1, y+1]]
 	return count
 	#Horesy because 'neigh'bors
 
-def PresentBoard():
+def PresentBoard():#Why is not method of board class?
 	YList = range(boardy)
 	XList = range(boardx)
 	CurrentY = YList[len(YList)-1]
