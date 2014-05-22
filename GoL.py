@@ -25,14 +25,22 @@ def MakeBoard(x, y):
             CellsDict[item, i] = Cell(item, i, L)
 class Cell(object):
     def __init__(self, x, y, life): #Life is a bool value
-        self.positionx = x
-        self.positiony = y
+        self.posx = x
+        self.posy = y
         self.life = life
     def __repr__(self):
-        return '(%s, %s)' % (str(self.positionx), str(self.positiony))
-    def isalive(self):
-        pass #Will soon be given substance.
-#A template cell.
+        return '%s, and at (%s, %s)' % (str(self.life), str(self.posx), str(self.posy))
+    def ShLi(self):
+        LN = CountLN(self.posx, self.posy)
+        if LN < 2:
+            self.life = False
+        if LN == 3:
+            self.life = True
+        if LN > 3:
+            self.life = False
+        if LN == 2:
+            self.life = self.life
+#A cell.
 def CountLN(x, y):
     count = 0
     Gatex = False
@@ -61,7 +69,6 @@ CellsDict[x+1, y+1]]
     return count
     #Horesy because 'neigh'bors
 def ShouldBeLiving(x, y):
-    CPL = [x, y]
     MC = CellsDict[x, y]
     LN = CountLN(x, y)
     if LN < 2:
@@ -73,11 +80,3 @@ def ShouldBeLiving(x, y):
     if LN == 2:
         return MC.life
         #Returns True if the cell should be alive, and False if it shouldn't,
-class LivingCell(Cell):#Does not need to exist
-    def __repr__(self):
-        return '(%s, %s), %s' % (str(self.positionx), str(self.positiony), str(self.life))
-#Living cells, soon to be improved.
-class DeadCell(Cell):#See LivingCell
-    def __repr__(self):
-        return '(%s, %s), %s' % (str(self.positionx), str(self.positiony), str(self.life))
-#Dead cells, soon to be living.
