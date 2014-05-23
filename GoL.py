@@ -21,7 +21,8 @@ class Board(object):
 		self.width = x
 		self.height = y
 		self.IconLife = "#"
-		self.IconNoLife = "0"
+		# self.IconNoLife = "0"
+		self.IconNoLife = "-"
 		self.CellsDict = {}
 		for x in range(self.width):
 			for y in range(self.height):
@@ -46,32 +47,49 @@ class Board(object):
 			for y in range(self.height):
 				cellLife = self.isLifeAt(x,y)
 				if cellLife:
-					boardString = ' '.join([boardString,"#"])
+					boardString = ' '.join([boardString,self.IconLife])
 				elif not cellLife:
-					boardString = ' '.join([boardString,"0"])
+					boardString = ' '.join([boardString,self.IconNoLife])
 			boardString = ''.join([boardString,'\n'])
 		return boardString
 	def printAsString(self):
 		print self
 	def CountLivingNeighbors(self, x, y):
 		# counts how many neighbor cells of the cell at x, y are living
-		# TODO
-		pass
+		neighbors = 0
+		for column in xrange(x-1,x+2):
+			for row in xrange(y-1,y+2):
+				if not (column,row) == (x,y):
+					# tries to do all 8 bordering cells, and soft-fails if a cell does not exist
+					# (which could happen if the given coordinates are on the border)
+					try:
+						if self.isLifeAt(column,row):
+							neighbors += 1
+					except:
+						pass
+		return neighbors
 	def WillCellBeAliveNextRound(self, x, y):
 		# determine whether the cell at x, y will be alive next round
-		# TODO
-		pass
+		# this code is modified from dav's original function elsewhere
+		LivingNeighbors = self.CountLivingNeighbors(x,y)
+		if LivingNeighbors < 2:
+			return False
+		if LivingNeighbors == 3:
+			return True
+		if LivingNeighbors > 3:
+			return False
+		if LivingNeighbors == 2:
+			return self.isLifeAt(x,y)
 	def advance(self):
 		# advances the game one move forward
-		# self.newCellsDict = self.CellsDict
+		# a new cells dictionary is necessary because without it, the results of previous outcomes can effect new outcomes mid-round
 		self.newCellsDict = {}
 		for cell in self.CellsDict:
 			cell_x = self.CellsDict[cell].Position_x
 			cell_y = self.CellsDict[cell].Position_y
-			cell_life = self.CellsDict[cell].WillBeAliveNextRound()
-			self.newCellsDict[cell_x,cell_y,cell_life]
+			cell_life = self.WillCellBeAliveNextRound(cell_x,cell_y)
+			self.newCellsDict[cell_x,cell_y] = Cell(cell_x, cell_y, cell_life)
 		self.CellsDict = self.newCellsDict
-		# this doesn't work yet, because several functions still depend on global variables
 
 class Cell(object):
 	def __init__(self, x, y, life):
@@ -132,16 +150,10 @@ CellsDict[x+1, y+1]]
 	#Horesy because 'neigh'bors
 
 # below this line is temp stuff, for testing.
-brd = Board(25,25,fill="random")
-# print brd.isLifeAt(1,1)
-brd.printAsString()
-print brd.CellsDict[1,1].Position_y
-brd.advance()
+# currently, it makes a board that is 5x5, prints it, and then advances it 2 rounds, printing it after each round
+brd = Board(5,5,fill="random")
 brd.printAsString()
 brd.advance()
 brd.printAsString()
 brd.advance()
 brd.printAsString()
-brd.advance()
-brd.printAsString()
-brd.advance()
