@@ -32,6 +32,16 @@ class Board(object):
 					self.CellsDict[x,y] = Cell( x, y, False )
 				elif fill == "full":
 					self.CellsDict[x,y] = Cell( x, y, True )
+	def fillWeightedRandom(self,weight):
+		# fills the board, with weight-chance of life in each cell
+		# 0.0 means empty board, 1.0 means full board
+		weight = float(weight) # just in case
+		for x in range(self.width):
+			for y in range(self.height):
+				if random.random() < weight:
+					self.CellsDict[x,y] = Cell( x, y, True )
+				else:
+					self.CellsDict[x,y] = Cell( x, y, False )
 	def isLifeAt(self,x,y):
 		# returns True if the cell at x,y is alive
 		# otherwise, returns false
