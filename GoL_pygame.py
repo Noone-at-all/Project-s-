@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 import random
-import pygame
+import pygame, sys, os 
+from pygame.locals import *
 #############################
 ### Conway's Game of Life ###
 #############################
@@ -10,7 +11,33 @@ import pygame
 # 2. Any live cell with two or three live neighbours lives on to the next generation.
 # 3. Any live cell with more than three live neighbours dies, as if by overcrowding.
 # 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+pygame.init()
+ScreenSize = (800,600)
+screen = pygame.display.set_mode(ScreenSize)
+pygame.display.set_caption("Conway's Game of Life")
 
+BgColor = (0,0,0)
+CellColor = (255,255,255)
+Dot = pygame.Rect(0,0,10,10)
+clock = pygame.time.Clock()
+
+columns = 800 / 10
+rows = 600 / 10
+
+
+
+while True:
+	clock.tick(50)
+	
+	for event in pygame.event.get():
+		if event.type == QUIT:
+			pygame.quit()
+			sys.exit()
+	screen.fill(CellColor, Dot)
+	pygame.display.update()
+
+
+''' for now..... 
 class Board(object):
 	def __init__(self,x,y,fill="random"):
 		# creates a board object that is x columns wide by y rows tall
@@ -114,3 +141,4 @@ brd.advance()
 brd.printAsString()
 brd.advance()
 brd.printAsString()
+'''
