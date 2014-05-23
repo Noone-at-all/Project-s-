@@ -59,7 +59,7 @@ class Board(object):
 		neighbors = 0
 		for column in xrange(x-1,x+2):
 			for row in xrange(y-1,y+2):
-				if not (column,row) == (x,y):
+				if not (column,row) == (x,y): # so we don't count the given cell
 					# tries to do all 8 bordering cells, and soft-fails if a cell does not exist
 					# (which could happen if the given coordinates are on the border)
 					try:
