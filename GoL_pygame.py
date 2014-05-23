@@ -18,13 +18,31 @@ pygame.display.set_caption("Conway's Game of Life")
 
 BgColor = (0,0,0)
 CellColor = (255,255,255)
-Dot = pygame.Rect(0,0,10,10)
+#Dot = pygame.Rect(0,0,10,10)
 clock = pygame.time.Clock()
 
 columns = 800 / 10
 rows = 600 / 10
+class Board(object):
+	"""docstring for Board"""
+	def __init__(self, x, y, fill="random"):
+		self.width = x
+		self.height = y
+		self.Life = pygame.Rect(0,0,10,10)
+		self.CellsDict = {}
+		for x in range(self.width):
+			for y in range(self.height):
+				if 
 
-
+class Cell(object):
+	"""docstring for Cell"""
+	def __init__(self, x, y, life):
+		self.Position_x = x
+		self.Position_y = y
+		self.life = life
+		if life:
+			TehLife = 
+		
 
 while True:
 	clock.tick(50)
@@ -37,7 +55,7 @@ while True:
 	pygame.display.update()
 
 
-''' for now..... 
+
 class Board(object):
 	def __init__(self,x,y,fill="random"):
 		# creates a board object that is x columns wide by y rows tall
@@ -141,4 +159,3 @@ brd.advance()
 brd.printAsString()
 brd.advance()
 brd.printAsString()
-'''
