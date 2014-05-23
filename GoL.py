@@ -107,10 +107,18 @@ class Cell(object):
 		return "{life}, and at ({x}, {y})".format(life=str(self.life), x=str(self.Position_x), y=str(self.Position_y))
 
 # below this line is temp stuff, for testing.
-# currently, it makes a random board that is 5x5, prints it, and then advances it 2 rounds, printing it after each round
-brd = Board(5,5,fill="random")
-brd.printAsString()
-brd.advance()
-brd.printAsString()
-brd.advance()
-brd.printAsString()
+from time import sleep
+import os
+rows, columns = os.popen('stty size', 'r').read().split()
+rows = int(rows)
+columns = int(columns)
+brd = ""
+while True:
+	brd = Board(rows,columns)
+	brd.IconNoLife = " "
+	for x in xrange(500):
+		brd.advance()
+		if str(brd).find("#") < 0:
+			break
+		brd.printAsString()
+		sleep(0.2)
