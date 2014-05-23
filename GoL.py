@@ -103,54 +103,11 @@ class Cell(object):
 		elif not life:
 			CoLi = 'O'
 		self.CoLi = CoLi
-	# def __repr__(self):
-	# 	return "{life}, and at ({x}, {y})".format(life=str(self.life), x=str(self.Position_x), y=str(self.Position_y))
-	def WillBeAliveNextRound(self):
-		# this function doesn't work, because CountLivingNeighbors doesn't work, because CountLivingNeighbors depends on obsolete global variables
-		# returns True or False depending on whether this cell should be alive the next round
-		#That's a lot of word to type
-		LivingNeighbors = CountLivingNeighbors(self.Position_x, self.Position_y)
-		if LivingNeighbors < 2:
-			self.life = False
-		if LivingNeighbors == 3:
-			self.life = True
-		if LivingNeighbors > 3:
-			self.life = False
-		if LivingNeighbors == 2:
-			self.life = self.life
-
-# this needs to be re-written, and moved to a Board() method
-def CountLivingNeighbors(x, y):
-	# this doesn't work, because it depends on obsolete global variables
-	count = 0
-	Gatex = False
-	Gatey = False
-	if x > 0:
-		Gatex = True
-	if y > 0:
-		Gatey = True
-	if Gatex and Gatey:
-		Horsey = [CellsDict[x-1, y-1], CellsDict[x-1, y], CellsDict[x-1, y+1], CellsDict[x, y], \
-CellsDict[x, y], CellsDict[x, y+1], CellsDict[x, y-1], CellsDict[x+1, y-1], CellsDict[x+1, y], \
-CellsDict[x+1, y+1]]
-	elif Gatex and not Gatey:
-		Horsey = [CellsDict[x-1, y], CellsDict[x-1, y+1], CellsDict[x, y], \
-CellsDict[x, y], CellsDict[x, y+1], CellsDict[x+1, y], \
-CellsDict[x+1, y+1]]
-	elif Gatey and not Gatex:
-		Horsey = [CellsDict[x, y], \
-CellsDict[x, y], CellsDict[x, y+1], CellsDict[x, y-1], CellsDict[x+1, y-1], CellsDict[x+1, y], \
-CellsDict[x+1, y+1]]
-	for item in Horsey:
-		if item.life == True:
-			count += 1
-		else:
-			pass
-	return count
-	#Horesy because 'neigh'bors
+	def __repr__(self):
+		return "{life}, and at ({x}, {y})".format(life=str(self.life), x=str(self.Position_x), y=str(self.Position_y))
 
 # below this line is temp stuff, for testing.
-# currently, it makes a board that is 5x5, prints it, and then advances it 2 rounds, printing it after each round
+# currently, it makes a random board that is 5x5, prints it, and then advances it 2 rounds, printing it after each round
 brd = Board(5,5,fill="random")
 brd.printAsString()
 brd.advance()
