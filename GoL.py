@@ -93,14 +93,21 @@ class Board(object):
 	def advance(self):
 		# advances the game one move forward
 		# a new cells dictionary is necessary because without it, the results of previous outcomes can effect new outcomes mid-round
-		self.newCellsDict = {}
+		newCellsDict = {}
 		for cell in self.CellsDict:
 			cell_x = self.CellsDict[cell].Position_x
 			cell_y = self.CellsDict[cell].Position_y
 			cell_life = self.WillCellBeAliveNextRound(cell_x,cell_y)
-			self.newCellsDict[cell_x,cell_y] = Cell(cell_x, cell_y, cell_life)
-		self.CellsDict = self.newCellsDict
-
+			newCellsDict[cell_x,cell_y] = Cell(cell_x, cell_y, cell_life)
+		self.CellsDict = newCellsDict
+	def writeToFile(self,output):
+		# writes the current board to the file "output", formatted as a string, 
+		toWrite = str(self)
+		toWrite = toWrite.strip()
+		# toWrite = toWrite[:-2]
+		toWrite = toWrite.replace(' ' ,'')
+		with open(output,'w') as outputFile:
+			outputFile.write(toWrite)
 class Cell(object):
 	def __init__(self, x, y, life):
 		# x and y are the co-ordinates of the cell
