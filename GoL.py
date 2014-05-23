@@ -101,13 +101,31 @@ class Board(object):
 			newCellsDict[cell_x,cell_y] = Cell(cell_x, cell_y, cell_life)
 		self.CellsDict = newCellsDict
 	def writeToFile(self,output):
-		# writes the current board to the file "output", formatted as a string, 
+		# writes the current board to the file "output", formatted as a string
+		# make sure not to set IconNoLife to " " if you use this
 		toWrite = str(self)
 		toWrite = toWrite.strip()
-		# toWrite = toWrite[:-2]
 		toWrite = toWrite.replace(' ' ,'')
 		with open(output,'w') as outputFile:
 			outputFile.write(toWrite)
+	def readFromFile(self,inputFile):
+		# reads a board from the given file, and imports it to this board.
+		with open(inputFile) as importFile:
+			# determine the width and height of the board from the file
+			self.height = len(importFile.readlines())
+			importFile.seek(0)
+			self.width = len(importFile.readline().strip())
+			importFile.seek(0)
+			self.CellsDict = {}
+			# this is complicated and difficult to understand.
+			# but it was the only way I could get it to work
+			for line,x in zip(importFile.readlines(),xrange(self.width)):
+				for cell,y in zip(line,xrange(self.height)):
+					if cell == self.IconLife:
+						cellLife = True
+					elif cell == self.IconNoLife:
+						cellLife = False
+					self.CellsDict[(x,y)] = Cell(x,y,cellLife)
 class Cell(object):
 	def __init__(self, x, y, life):
 		# x and y are the co-ordinates of the cell
