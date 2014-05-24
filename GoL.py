@@ -24,8 +24,8 @@ class Board(object):
 		# self.IconNoLife = "0"
 		self.IconNoLife = "-"
 		self.CellsDict = {}
-		for x in range(self.width):
-			for y in range(self.height):
+		for y in range(self.height):
+			for x in range(self.width):
 				if fill == "random":
 					self.CellsDict[x,y] = Cell( x, y, random.choice([True,False]) )
 				elif fill == "blank":
@@ -53,8 +53,8 @@ class Board(object):
 		# build the string by joining it to itself
 		# use spaces on rows, and newlines on columns 
 		boardString = ""
-		for x in range(self.width):
-			for y in range(self.height):
+		for y in range(self.height):
+			for x in range(self.width):
 				cellLife = self.isLifeAt(x,y)
 				if cellLife:
 					boardString = ' '.join([boardString,self.IconLife])
@@ -110,22 +110,22 @@ class Board(object):
 			outputFile.write(toWrite)
 	def readFromFile(self,inputFile):
 		# reads a board from the given file, and imports it to this board.
+		self.CellsDict = {}
 		with open(inputFile) as importFile:
 			# determine the width and height of the board from the file
 			self.height = len(importFile.readlines())
 			importFile.seek(0)
 			self.width = len(importFile.readline().strip())
 			importFile.seek(0)
-			self.CellsDict = {}
 			# this is complicated and difficult to understand.
 			# but it was the only way I could get it to work
-			for line,x in zip(importFile.readlines(),xrange(self.width)):
-				for cell,y in zip(line,xrange(self.height)):
+			for line,y in zip(importFile.readlines(),xrange(self.height)):
+				for cell,x in zip(line,xrange(self.width)):
 					if cell == self.IconLife:
 						cellLife = True
 					elif cell == self.IconNoLife:
 						cellLife = False
-					self.CellsDict[(x,y)] = Cell(x,y,cellLife)
+					self.CellsDict[x,y] = Cell(x,y,cellLife)
 class Cell(object):
 	def __init__(self, x, y, life):
 		# x and y are the co-ordinates of the cell
