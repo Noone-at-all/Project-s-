@@ -11,18 +11,8 @@ from pygame.locals import *
 # 2. Any live cell with two or three live neighbours lives on to the next generation.
 # 3. Any live cell with more than three live neighbours dies, as if by overcrowding.
 # 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-pygame.init()
-ScreenSize = (800,600)
-screen = pygame.display.set_mode(ScreenSize)
-pygame.display.set_caption("Conway's Game of Life")
 
-BgColor = (0,0,0)
-CellColor = (255,255,255)
-#Dot = pygame.Rect(0,0,10,10)
-clock = pygame.time.Clock()
 
-columns = 800 / 10
-rows = 600 / 10
 class Board(object):
 	"""docstring for Board"""
 	def __init__(self, x, y, fill="random"):
@@ -34,15 +24,20 @@ class Board(object):
 			for y in range(self.height):
 				if 
 
-class Cell(object):
-	"""docstring for Cell"""
-	def __init__(self, x, y, life):
-		self.Position_x = x
-		self.Position_y = y
-		self.life = life
-		if life:
-			TehLife = 
+def DrawLife():
+	width = 10
+	height = 10
+	
 		
+if __name__ =='__main__':
+	pygame.init()
+	ScreenSize = (800,600)
+	screen = pygame.display.set_mode(ScreenSize)
+	BgColor = (0,0,0)
+	screen.fill(BgColor)
+	clock = pygame.time.Clock()
+	pygame.display.set_caption("Conway's Game of Life")
+
 
 while True:
 	clock.tick(50)
@@ -54,7 +49,7 @@ while True:
 	screen.fill(CellColor, Dot)
 	pygame.display.update()
 
-
+'''
 
 class Board(object):
 	def __init__(self,x,y,fill="random"):
