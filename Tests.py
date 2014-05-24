@@ -26,7 +26,7 @@ class Board(object):
 		self.CellsDict = {}
 		for x in range(0,800,10):
 			for y in range(0,600,10):
-				self.CellsDict[x,y] = Cell(x, y, random.choice([True,False])
+				self.CellsDict[x,y] = Cell(x, y, random.choice([True,False]))
 
 	def isLifeAt(self,x,y):
 		return self.CellsDict[x,y].life
@@ -66,6 +66,7 @@ class Board(object):
 			if cellLife == True:
 				dot = pygame.Rect(cellX,cellY,10,10)
 				screen.fill((255,255,255),dot)
+				pygame.display.update()
 			else:
 				pass
 
@@ -79,5 +80,6 @@ class Cell(object):
 	def __repr__(self):
 		return "{life}, and at ({x},{y})".format(life=str(self.life), x=str(self.PositionX), y=str(self.PositionY))
 
-Board()
-Board.DrawLife()
+sqr = pygame.Rect(10,10,10,10)
+screen.fill((255,255,255),sqr)
+pygame.display.update()
