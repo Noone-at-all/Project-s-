@@ -24,6 +24,8 @@ class Board(object):
 	"""docstring for Board"""
 	def __init__(self):
 		self.CellsDict = {}
+		#creates a dictionary of x,y cords spanning the entire 800x600 screen
+		#that are spaced by 10 for the size of the dot
 		for x in range(0,800,10):
 			for y in range(0,600,10):
 				self.CellsDict[x,y] = Cell(x, y, random.choice([True,False]))
@@ -33,7 +35,7 @@ class Board(object):
 
 	def CountLivingNeighbors(self,x,y):
 		neighbors = 0
-		for column in xrange(x-10,x+20):
+		for column in xrange(x-10,x+20): #10s because of dot size
 			for row in xrange(y-10,y+20):
 				if not (column,row) == (x,y): # so we don't count the given cell
 					# tries to do all 8 bordering cells, and soft-fails if a cell does not exist
@@ -58,15 +60,15 @@ class Board(object):
 		if LivingNeighbors == 2:
 			return self.isLifeAt(x,y)
 
-	def DrawLife(self):
+	def DrawLife(self): #Draws a dot onto the screen based on the life values found in CellsDict
 		for cell in CellsDict:
 			cellX = self.CellsDict.PositionX
 			cellY = self.CellsDict.PositionY
 			cellLife = self.WillCellBeAliveNextRound(cellX,cellY)
 			if cellLife == True:
-				dot = pygame.Rect(cellX,cellY,10,10)
-				screen.fill((255,255,255),dot)
-				pygame.display.update()
+				dot = pygame.Rect(cellX,cellY,10,10) #pygame draws a 10x10 rectangle at cellx, celly 
+				screen.fill((255,255,255),dot) #pygame fills the rectangle with the color white
+				pygame.display.update() #updates display
 			else:
 				pass
 
@@ -80,6 +82,7 @@ class Cell(object):
 	def __repr__(self):
 		return "{life}, and at ({x},{y})".format(life=str(self.life), x=str(self.PositionX), y=str(self.PositionY))
 
+#just drawing a dot to see if everything works..... TEMP.
 sqr = pygame.Rect(10,10,10,10)
 screen.fill((255,255,255),sqr)
 pygame.display.update()
