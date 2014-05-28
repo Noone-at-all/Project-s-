@@ -19,56 +19,6 @@ screen.fill(BgColor)
 clock = pygame.time.Clock()
 pygame.display.set_caption("Conway's Game of Life")
 
-'''
-def Board():
-	for x in range(0,800,10):
-			for y in range(0,600,10):
-				CellsDict[x,y] = Cell(x, y, random.choice([True,False]))
-	#print CellsDict
-
-def isLifeAt(x,y):
-		return CellsDict[x,y].life
-
-def CountLivingNeighbors(x,y):
-	neighbors = 0
-	for column in xrange(x-10,x+20): #10s because of dot size
-		for row in xrange(y-10,y+20):
-			if not (column,row) == (x,y): # so we don't count the given cell
-				# tries to do all 8 bordering cells, and soft-fails if a cell does not exist
-				# (which could happen if the given coordinates are on the border)
-				try:
-					if isLifeAt(column,row):
-						neighbors += 1
-				except:
-					pass
-	return neighbors
-
-def WillCellBeAliveNextRound(x, y):
-	# determine whether the cell at x, y will be alive next round
-	# this code is modified from dav's original function elsewhere
-	LivingNeighbors = CountLivingNeighbors(x,y)
-	if LivingNeighbors < 2:
-		return False
-	if LivingNeighbors == 3:
-		return True
-	if LivingNeighbors > 3:
-		return False
-	if LivingNeighbors == 2:
-		return isLifeAt(x,y)
-
-def DrawLife(): #Draws a dot onto the screen based on the life values found in CellsDict
-	for cell in CellsDict:
-		cellX = CellsDict.PositionX
-		cellY = CellsDict.PositionY
-		cellLife = WillCellBeAliveNextRound(cellX,cellY)
-		if cellLife == True:
-			dot = pygame.Rect(cellX,cellY,10,10) #pygame draws a 10x10 rectangle at cellx, celly 
-			screen.fill((255,255,255),dot) #pygame fills the rectangle with the color white
-			pygame.display.update() #updates display
-		else:
-			pass
-
-'''
 class Board(object):
 	"""docstring for Board"""
 	def __init__(self):
@@ -127,8 +77,8 @@ class Board(object):
 		# a new cells dictionary is necessary because without it, the results of previous outcomes can effect new outcomes mid-round
 		newCellsDict = {}
 		for cell in self.CellsDict:
-			cell_x = self.CellsDict[cell].Position_x
-			cell_y = self.CellsDict[cell].Position_y
+			cell_x = self.CellsDict[cell].PositionX
+			cell_y = self.CellsDict[cell].PositionY
 			cell_life = self.WillCellBeAliveNextRound(cell_x,cell_y)
 			newCellsDict[cell_x,cell_y] = Cell(cell_x, cell_y, cell_life)
 		self.CellsDict = newCellsDict
@@ -145,7 +95,7 @@ class Cell(object):
 brd = Board()
 brd.DrawLife()
 brd.advance()
-brb.DrawLife()
+brd.DrawLife()
 brd.advance()
 
 #just drawing a dot to see if everything works..... TEMP.
