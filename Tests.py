@@ -122,6 +122,17 @@ class Board(object):
 			else:
 				pass
 
+	def advance(self):
+		# advances the game one move forward
+		# a new cells dictionary is necessary because without it, the results of previous outcomes can effect new outcomes mid-round
+		newCellsDict = {}
+		for cell in self.CellsDict:
+			cell_x = self.CellsDict[cell].Position_x
+			cell_y = self.CellsDict[cell].Position_y
+			cell_life = self.WillCellBeAliveNextRound(cell_x,cell_y)
+			newCellsDict[cell_x,cell_y] = Cell(cell_x, cell_y, cell_life)
+		self.CellsDict = newCellsDict
+
 class Cell(object):
 	"""docstring for Cell"""
 	def __init__(self, x, y, life):
@@ -133,6 +144,9 @@ class Cell(object):
 
 brd = Board()
 brd.DrawLife()
+brd.advance()
+brb.DrawLife()
+brd.advance()
 
 #just drawing a dot to see if everything works..... TEMP.
 '''
