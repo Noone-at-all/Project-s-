@@ -111,9 +111,9 @@ class Board(object):
 			return self.isLifeAt(x,y)
 
 	def DrawLife(self): #Draws a dot onto the screen based on the life values found in CellsDict
-		for cell in CellsDict:
-			cellX = self.CellsDict.PositionX
-			cellY = self.CellsDict.PositionY
+		for cell in self.CellsDict:
+			cellX = self.CellsDict[cell].PositionX
+			cellY = self.CellsDict[cell].PositionY
 			cellLife = self.WillCellBeAliveNextRound(cellX,cellY)
 			if cellLife == True:
 				dot = pygame.Rect(cellX,cellY,10,10) #pygame draws a 10x10 rectangle at cellx, celly 
@@ -124,15 +124,15 @@ class Board(object):
 
 class Cell(object):
 	"""docstring for Cell"""
-	def __init__(self, x,y,life):
+	def __init__(self, x, y, life):
 		self.PositionX = x
 		self.PositionY = y
 		self.life = life
 	def __repr__(self):
 		return "{life}, and at ({x},{y})".format(life=str(self.life), x=str(self.PositionX), y=str(self.PositionY))
 
-Board()
-Board.DrawLife()
+brd = Board()
+brd.DrawLife()
 
 #just drawing a dot to see if everything works..... TEMP.
 '''
