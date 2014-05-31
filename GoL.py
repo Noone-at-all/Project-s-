@@ -128,6 +128,22 @@ class Board(object):
 					elif cell == self.IconNoLife:
 						cellLife = False
 					self.CellsDict[x,y] = Cell(x,y,cellLife)
+	def expand(self,x,y,fill="blank"):
+		# expand the board to the size x, y
+		# if the board is smaller than x, y, return False
+		if x < self.width or y < self.height:
+			return False
+		self.width  = x
+		self.height = y
+		for y in range(self.height):
+			for x in range(self.width):
+				if not (x,y) in self.CellsDict:
+					if fill == "random":
+						self.CellsDict[x,y] = Cell( x, y, random.choice([True,False]) )
+					elif fill == "blank":
+						self.CellsDict[x,y] = Cell( x, y, False )
+					elif fill == "full":
+						self.CellsDict[x,y] = Cell( x, y, True )
 class Cell(object):
 	def __init__(self, x, y, life):
 		# x and y are the co-ordinates of the cell
