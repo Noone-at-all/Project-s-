@@ -48,7 +48,7 @@ class Board(object):
 		return self.CellsDict[x,y].life
 	def __repr__(self):
 		return self.toString()
-	def toString(self,xSpacing=" ",ySpacing="\n"):
+	def toString(self,xSpacing=" ",ySpacing="\n",trailingNewline=True):
 		# converts the board to a multi-line string
 		# use xSpacing on rows, and ySpacing on columns
 		life = self.IconLife
@@ -62,7 +62,10 @@ class Board(object):
 				elif not cellLife:
 					boardString = xSpacing.join([boardString,self.IconNoLife])
 			boardString = ''.join([boardString,ySpacing])
-		return boardString
+		if trailingNewline:
+			return boardString
+		elif not trailingNewline:
+			return boardString[:-1]
 	def printAsString(self,xSpacing=" ",ySpacing="\n"):
 		print self.toString(xSpacing=xSpacing,ySpacing=ySpacing)
 	def CountLivingNeighbors(self, x, y):
@@ -104,10 +107,7 @@ class Board(object):
 	def writeToFile(self,output):
 		# writes the current board to the file "output", formatted as a string
 		# make sure not to set IconNoLife to " " if you use this
-		toWrite = self.toString(xSpacing="")
-		toWrite = toWrite[:-1]
-		# toWrite = toWrite.strip()
-		# toWrite = toWrite.replace(' ' ,'')
+		toWrite = self.toString(xSpacing="",trailingNewline=False)
 		with open(output,'w') as outputFile:
 			outputFile.write(toWrite)
 	def readFromFile(self,inputFile):
@@ -128,6 +128,8 @@ class Board(object):
 					elif cell == self.IconNoLife:
 						cellLife = False
 					self.CellsDict[x,y] = Cell(x,y,cellLife)
+	def shift(self,x,y,fill="blank"):
+		pass
 	def expand(self,x,y,fill="blank"):
 		# expand the board to the size x, y
 		# if the board is smaller than x, y, return False
