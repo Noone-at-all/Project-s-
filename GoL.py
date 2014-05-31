@@ -47,23 +47,24 @@ class Board(object):
 		# otherwise, returns false
 		return self.CellsDict[x,y].life
 	def __repr__(self):
+		return self.toString()
+	def toString(self,xSpacing=" ",ySpacing="\n"):
 		# converts the board to a multi-line string
+		# use xSpacing on rows, and ySpacing on columns
 		life = self.IconLife
 		nope = self.IconNoLife
-		# build the string by joining it to itself
-		# use spaces on rows, and newlines on columns 
 		boardString = ""
 		for y in range(self.height):
 			for x in range(self.width):
 				cellLife = self.isLifeAt(x,y)
 				if cellLife:
-					boardString = ' '.join([boardString,self.IconLife])
+					boardString = xSpacing.join([boardString,self.IconLife])
 				elif not cellLife:
-					boardString = ' '.join([boardString,self.IconNoLife])
-			boardString = ''.join([boardString,'\n'])
+					boardString = xSpacing.join([boardString,self.IconNoLife])
+			boardString = ''.join([boardString,ySpacing])
 		return boardString
-	def printAsString(self):
-		print self
+	def printAsString(self,xSpacing=" ",ySpacing="\n"):
+		print self.toString(xSpacing=xSpacing,ySpacing=ySpacing)
 	def CountLivingNeighbors(self, x, y):
 		# counts how many neighbor cells of the cell at x, y are living
 		neighbors = 0
@@ -103,9 +104,10 @@ class Board(object):
 	def writeToFile(self,output):
 		# writes the current board to the file "output", formatted as a string
 		# make sure not to set IconNoLife to " " if you use this
-		toWrite = str(self)
-		toWrite = toWrite.strip()
-		toWrite = toWrite.replace(' ' ,'')
+		toWrite = self.toString(xSpacing="")
+		toWrite = toWrite[:-1]
+		# toWrite = toWrite.strip()
+		# toWrite = toWrite.replace(' ' ,'')
 		with open(output,'w') as outputFile:
 			outputFile.write(toWrite)
 	def readFromFile(self,inputFile):
@@ -115,7 +117,7 @@ class Board(object):
 			# determine the width and height of the board from the file
 			self.height = len(importFile.readlines())
 			importFile.seek(0)
-			self.width = len(importFile.readline().strip())
+			self.width = len(importFile.readline().strip('\n'))
 			importFile.seek(0)
 			# this is complicated and difficult to understand.
 			# but it was the only way I could get it to work
