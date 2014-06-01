@@ -128,8 +128,41 @@ class Board(object):
 					elif cell == self.IconNoLife:
 						cellLife = False
 					self.CellsDict[x,y] = Cell(x,y,cellLife)
+	def shrink(self,x,y):
+		# shrinks the board to size x, y
+		newCellsDict = {}
+		# remove old cells
+		for cell in self.CellsDict:
+			cell_x = self.CellsDict[cell].Position_x
+			cell_y = self.CellsDict[cell].Position_y
+			if cell_x <= x and cell_y <= y:
+				newCellsDict[cell] = self.CellsDict[cell]
+		# new size
+		self.width = x
+		self.height = y
+		self.CellsDict = newCellsDict
 	def shift(self,x,y,fill="blank"):
-		pass
+		# shifts the board by x, y
+		# these values may be negative
+		# cells that land outside the grid will be removed.
+		newCellsDict = {}
+		for cell in self.CellsDict:
+			cell_x = self.CellsDict[cell].Position_x
+			cell_y = self.CellsDict[cell].Position_y
+			# cell_life = self.CellsDict[cell].Life
+			cell_x += x
+			cell_y += y
+			newCellsDict[cell_x,cell_y] = self.CellsDict[cell]
+		for y in xrange(self.height):
+			for x in xrange(self.width):
+				if not (x,y) in newCellsDict:
+					if fill == "random":
+						newCellsDict[x,y] = Cell( x, y, random.choice([True,False]) )
+					elif fill == "blank":
+						newCellsDict[x,y] = Cell( x, y, False )
+					elif fill == "full":
+						newCellsDict[x,y] = Cell( x, y, True )
+		self.CellsDict = newCellsDict
 	def expand(self,x,y,fill="blank"):
 		# expand the board to the size x, y
 		# if the board is smaller than x, y, return False
@@ -137,8 +170,8 @@ class Board(object):
 			return False
 		self.width  = x
 		self.height = y
-		for y in range(self.height):
-			for x in range(self.width):
+		for y in xrange(self.height):
+			for x in xrange(self.width):
 				if not (x,y) in self.CellsDict:
 					if fill == "random":
 						self.CellsDict[x,y] = Cell( x, y, random.choice([True,False]) )
