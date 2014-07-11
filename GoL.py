@@ -165,10 +165,10 @@ class Board(object):
 		self.CellsDict = newCellsDict
 	def expand(self,x,y,fill="blank"):
 		# expand the board to the size x, y
-		# if the board is smaller than x, y, return False
-		if x < self.width or y < self.height:
+		# if the board is larger than x, y, return False
+		if x > self.width or y > self.height: 
 			return False
-		self.width  = x
+		self.width  = x 
 		self.height = y
 		for y in xrange(self.height):
 			for x in xrange(self.width):
